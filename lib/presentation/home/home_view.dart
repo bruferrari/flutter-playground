@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/presentation/home/home_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/pair.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,9 @@ class Content extends StatelessWidget {
     var appState = context.watch<HomeViewModel>();
     var pair = appState.current;
 
-    String likeBtnLabel = appState.favorites.contains(pair) ? 'Remove' : 'Like';
+    var stylingLikeData = appState.favorites.contains(pair)
+        ? Pair('Like', Icons.favorite)
+        : Pair('Remove', Icons.favorite_border_outlined);
 
     return Scaffold(
       body: Center(
@@ -59,11 +63,13 @@ class Content extends StatelessWidget {
                     },
                     child: Text('Next')),
                 SizedBox(width: 20),
-                ElevatedButton(
-                    onPressed: () {
-                      appState.toggleFavorites();
-                    },
-                    child: Text(likeBtnLabel)),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    appState.toggleFavorites();
+                  },
+                  icon: Icon(stylingLikeData.second),
+                  label: Text(stylingLikeData.first),
+                ),
               ],
             )
           ],
