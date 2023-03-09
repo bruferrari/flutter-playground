@@ -5,9 +5,28 @@ import 'package:provider/provider.dart';
 
 import '../../utils/pair.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  var selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = WordGenerator();
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedIndex');
+    }
+
     return Scaffold(
       body: Row(
         children: [
@@ -20,16 +39,18 @@ class HomeScreen extends StatelessWidget {
                 NavigationRailDestination(
                     icon: Icon(Icons.favorite), label: Text('Favorites'))
               ],
-              selectedIndex: 0,
+              selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
-                print('selected: $value');
+                setState(() {
+                  selectedIndex = value;
+                });
               },
             ),
           ),
           Expanded(
               child: Container(
             color: Theme.of(context).colorScheme.primaryContainer,
-            child: Content(),
+            child: page,
           )),
         ],
       ),
@@ -37,7 +58,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class Content extends StatelessWidget {
+class WordGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<HomeViewModel>();
@@ -47,33 +68,31 @@ class Content extends StatelessWidget {
         ? Pair('Like', Icons.favorite)
         : Pair('Remove', Icons.favorite_border_outlined);
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BigCard(pair: pair),
-            SizedBox(height: 10),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      appState.getNext();
-                    },
-                    child: Text('Next')),
-                SizedBox(width: 20),
-                ElevatedButton.icon(
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BigCard(pair: pair),
+          SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
                   onPressed: () {
-                    appState.toggleFavorites();
+                    appState.getNext();
                   },
-                  icon: Icon(stylingLikeData.second),
-                  label: Text(stylingLikeData.first),
-                ),
-              ],
-            )
-          ],
-        ),
+                  child: Text('Next')),
+              SizedBox(width: 20),
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorites();
+                },
+                icon: Icon(stylingLikeData.second),
+                label: Text(stylingLikeData.first),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

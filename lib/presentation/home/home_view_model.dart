@@ -2,7 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/presentation/home/home_state.dart';
 
-class HomeViewModel extends ChangeNotifier {
+class HomeViewModel with ChangeNotifier {
   HomeState state = HomeState.empty();
 
   var current = WordPair.random();
