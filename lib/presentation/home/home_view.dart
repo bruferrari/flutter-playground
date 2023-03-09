@@ -4,35 +4,6 @@ import 'package:namer_app/presentation/home/home_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     body: Row(
-  //       children: [
-  //         SafeArea(
-  //           child: NavigationRail(
-  //             extended: false,
-  //             destinations: [
-  //               NavigationRailDestination(
-  //                   icon: Icon(Icons.home), label: Text('Home')),
-  //               NavigationRailDestination(
-  //                   icon: Icon(Icons.favorite), label: Text('Favorites'))
-  //             ],
-  //             selectedIndex: 0,
-  //             onDestinationSelected: (value) {
-  //               print('selected: $value');
-  //             },
-  //           ),
-  //         ),
-  //         Expanded(
-  //             child: Container(
-  //           color: Theme.of(context).colorScheme.primaryContainer,
-  //           child: Content(),
-  //         )),
-  //       ],
-  //     ),
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +14,9 @@ class HomeScreen extends StatelessWidget {
               extended: false,
               destinations: [
                 NavigationRailDestination(
-                  icon: Icon(Icons.home),
-                  label: Text('Home'),
-                ),
+                    icon: Icon(Icons.home), label: Text('Home')),
                 NavigationRailDestination(
-                  icon: Icon(Icons.favorite),
-                  label: Text('Favorites'),
-                ),
+                    icon: Icon(Icons.favorite), label: Text('Favorites'))
               ],
               selectedIndex: 0,
               onDestinationSelected: (value) {
@@ -58,11 +25,10 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: Content(),
-            ),
-          ),
+              child: Container(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            child: Content(),
+          )),
         ],
       ),
     );
