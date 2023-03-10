@@ -1,17 +1,17 @@
 import 'package:english_words/english_words.dart';
 
 class HomeState {
-  WordPair? current;
+  WordPair current = WordPair.random();
   List<WordPair> favorites = List.empty();
 
   HomeState(this.current, this.favorites);
 
   HomeState.empty() {
-    current = null;
+    current = WordPair.random();
     favorites = List.empty();
   }
 
-  WordPair? getCurrent() => current;
+  WordPair getCurrent() => current;
   List<WordPair> getFavorites() => favorites;
 
   void setCurrent(WordPair current) {

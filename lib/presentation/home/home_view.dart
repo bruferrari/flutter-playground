@@ -63,9 +63,9 @@ class WordGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<HomeViewModel>();
-    var pair = appState.current;
+    var pair = appState.state.current;
 
-    var stylingLikeData = appState.favorites.contains(pair)
+    var stylingLikeData = appState.state.favorites.contains(pair)
         ? Pair('Like', Icons.favorite)
         : Pair('Remove', Icons.favorite_border_outlined);
 
