@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:namer_app/presentation/favorites/favorites_view_model.dart';
 
 class FavoritesView extends StatelessWidget {
@@ -9,10 +9,13 @@ class FavoritesView extends StatelessWidget {
     var favorites = _viewModel.getFavoritesState().favorites;
 
     return ListView.builder(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.symmetric(vertical: 24, horizontal: 8),
       itemCount: favorites.length,
       itemBuilder: (BuildContext context, int index) {
-        return Text(favorites[index].asLowerCase);
+        return ListTile(
+          title: Text(favorites[index].asLowerCase),
+          leading: Icon(Icons.favorite),
+        );
       },
     );
   }
