@@ -6,16 +6,26 @@ class FavoritesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var favorites = _viewModel.getFavoritesState().favorites;
+    return FutureBuilder<FavoritesState>(
+      future: _viewModel.getFavoritesState(),
+      builder: (context, AsyncSnapshot<FavoritesState> snapshot) {
+        if (snapshot.hasData) {
+          var data = snapshot.data;
+          if (data == null) return Row();
 
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: 24, horizontal: 8),
-      itemCount: favorites.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          title: Text(favorites[index].asLowerCase),
-          leading: Icon(Icons.favorite),
-        );
+          return ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: 24, horizontal: 8),
+            itemCount: data.favorites.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(data.favorites[index]),
+                leading: Icon(Icons.favorite),
+              );
+            },
+          );
+        }
+
+        return Row();
       },
     );
   }

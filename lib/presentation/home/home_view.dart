@@ -1,10 +1,7 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/presentation/favorites/favorites_view.dart';
 import 'package:namer_app/presentation/home/home_view_model.dart';
 import 'package:provider/provider.dart';
-
-import '../../utils/pair.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -63,17 +60,15 @@ class WordGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<HomeViewModel>();
-    var pair = appState.state.current;
 
-    var stylingLikeData = appState.state.favorites.contains(pair)
-        ? Pair('Like', Icons.favorite)
-        : Pair('Remove', Icons.favorite_border_outlined);
+    var pair = appState.current;
+    var stylingLikeData = appState.getStyling();
 
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BigCard(pair: pair),
+          BigCard(word: pair),
           SizedBox(height: 10),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -86,7 +81,7 @@ class WordGenerator extends StatelessWidget {
               SizedBox(width: 20),
               ElevatedButton.icon(
                 onPressed: () {
-                  appState.toggleFavorites();
+                  appState.toggleFavorite();
                 },
                 icon: Icon(stylingLikeData.second),
                 label: Text(stylingLikeData.first),
@@ -102,10 +97,10 @@ class WordGenerator extends StatelessWidget {
 class BigCard extends StatelessWidget {
   const BigCard({
     super.key,
-    required this.pair,
+    required this.word,
   });
 
-  final WordPair pair;
+  final String word;
 
   @override
   Widget build(BuildContext context) {
@@ -117,11 +112,7 @@ class BigCard extends StatelessWidget {
       color: theme.colorScheme.primary,
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(
-          pair.asLowerCase,
-          style: style,
-          semanticsLabel: "${pair.first} ${pair.second}",
-        ),
+        child: Text(word, style: style),
       ),
     );
   }

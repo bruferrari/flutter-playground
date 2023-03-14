@@ -1,31 +1,31 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/data/words_repository.dart';
-import 'package:namer_app/presentation/home/home_state.dart';
+
+import '../../utils/pair.dart';
 
 class HomeViewModel with ChangeNotifier {
   WordsRepository _repository;
 
   HomeViewModel(this._repository);
 
-  HomeState state = HomeState.empty();
+  String current = WordPair.random().asLowerCase.toString();
 
   void getNext() {
-    state.setCurrent(WordPair.random());
+    current = WordPair.random().asLowerCase.toString();
 
     notifyListeners();
   }
 
-  void toggleFavorites() {
-    List<WordPair> favorites = _repository.getFavorites();
-    var current = state.getCurrent();
-
-    favorites.contains(current)
-        ? favorites.remove(current)
-        : favorites.add(current);
-
-    state.setFavorites(favorites);
+  void toggleFavorite() {
+    _repository.favorites.contains(current)
+        ? _repository.removeFavorite(current)
+        : _repository.addFavorite(current);
 
     notifyListeners();
   }
+
+  Pair<String, IconData> getStyling() => _repository.favorites.contains(current)
+      ? Pair('Remove', Icons.favorite)
+      : Pair('Like', Icons.favorite_border_outlined);
 }

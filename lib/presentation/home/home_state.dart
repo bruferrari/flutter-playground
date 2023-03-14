@@ -2,7 +2,7 @@ import 'package:english_words/english_words.dart';
 
 class HomeState {
   WordPair current = WordPair.random();
-  List<WordPair> favorites = List.empty();
+  List<String> favorites = List.empty();
 
   HomeState(this.current, this.favorites);
 
@@ -12,13 +12,13 @@ class HomeState {
   }
 
   WordPair getCurrent() => current;
-  List<WordPair> getFavorites() => favorites;
+  List<String> getFavorites() => favorites;
 
   void setCurrent(WordPair current) {
     this.current = current;
   }
 
-  void setFavorites(List<WordPair> favorites) {
+  void setFavorites(List<String> favorites) {
     this.favorites = favorites;
   }
 }
